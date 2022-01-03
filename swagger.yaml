@@ -41,12 +41,7 @@ paths:
           - Frontend
         summary: "Erhalte alle Tickets einer Gruppe, auf die du Zugriff hast."
         parameters:
-          - name: group_id
-            required: true
-            in: path
-            description: Die ID der Gruppe
-            schema:
-              type: string
+          - $ref: '#/components/parameters/group_id'
           - name: archieved
             required: false
             schema:
@@ -69,12 +64,7 @@ paths:
         - Messenger
       summary: "Erhalte alle Tickets einer Gruppe, auf die du Zugriff hast."
       parameters:
-        - name: group_id
-          required: true
-          in: path
-          description: Die ID der Gruppe
-          schema:
-            type: string
+        - $ref: '#/components/parameters/group_id'
       requestBody:
         required: true
         description: Der Inhalt des Tickets, das erstellt werden soll
@@ -95,12 +85,7 @@ paths:
         - Frontend
       summary: Aktualisiere ein Ticket
       parameters:
-        - name: group_id
-          required: true
-          in: path
-          description: Die ID der Gruppe
-          schema:
-            type: string
+        - $ref: '#/components/parameters/group_id'
       requestBody:
         required: true
         description: Die Felder, die geupdatet werden sollen
@@ -125,12 +110,7 @@ paths:
         - Tickets
         - Frontend
       parameters:
-        - name: group_id
-          required: true
-          in: path
-          description: Die ID der Gruppe
-          schema:
-            type: string
+        - $ref: '#/components/parameters/group_id'
       responses:
         200:
           description: Der User hat das Ticket geclaimt
@@ -145,12 +125,7 @@ paths:
         - Tickets
         - Frontend
       parameters:
-        - name: group_id
-          required: true
-          in: path
-          description: Die ID der Gruppe
-          schema:
-            type: string
+        - $ref: '#/components/parameters/group_id'
       responses:
         200:
           description: Der User hat das Ticket geabgegeben
@@ -158,8 +133,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Ticket'
+  /clients:
+    get:
+      summary: Bekomme alle Clients
+      tags:
+        - Clients
+        - Frontend
+      responses:
+        200:
+          description: Abfrage erlaubt und erfolgreich
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+    post:
+      summary: Erstelle einen Client
+      tags:
+        - Client
+        - Frontend
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateClient'
+      responses:
+        200:
+          description: Client erstellt
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
    
 components:
+  parameters:
+    group_id:
+      name: group_id
+      required: true
+      in: path
+      description: Die ID der Gruppe
+      schema:
+        type: string
+      
   schemas:
     Platform:
       type: string
